@@ -9,7 +9,7 @@ import {
   selectFilteredPosts,
   setSearchTerm,
   fetchComments,
-} from '../../store/redditslice'
+} from '../../store/redditSlice'
 import './Main.css';
 
 const Main = () => {

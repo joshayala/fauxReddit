@@ -1,14 +1,14 @@
 export const API_ROOT = 'https://www.reddit.com';
 
 export const getSubredditPosts = async (subreddit) => {
-  const response = await fetch(`${API_ROOT}${subreddit}.json`);
+  const response = await fetch(`${API_ROOT}${subreddit}/.json?raw_json=1`);
   const json = await response.json();
 
   return json.data.children.map((post) => post.data);
 };
 
 export const getSubreddits = async () => {
-  const response = await fetch(`${API_ROOT}/subreddits.json`);
+  const response = await fetch(`${API_ROOT}/subreddits.json?raw_json=1`);
   const json = await response.json();
 
   return json.data.children.map((subreddit) => subreddit.data);
@@ -54,6 +54,20 @@ export const search = async ({ searchTerm = '', after = '', before = '', count }
     } 
     
 }
+
+export const getSubredditsbySearch = async (searchTerm) => {
+    try {
+        const response = await fetch(`${API_ROOT}/subreddits/search.json?q=${searchTerm}`);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`${response.status} - ${errorData.message}`);
+        }
+        const json = await response.json();
+        return json.data.children;        
+    } catch (error) {
+        throw Error (error);       
+    }     
+};
 
 export const getSubredditLogo = async (subredditName) => {
     try {

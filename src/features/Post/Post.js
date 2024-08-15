@@ -14,6 +14,7 @@ import shortenNumber from '../../utils/shortenRandomNumber';
 import Card from '../../components/Card/Card';
 import Comment from '../Comment/Comment';
 import Avatar from '../Avatar/Avatar';
+import { GiSpikedHalo } from "react-icons/gi";
 
 dayjs.extend(relativeTime);
 
@@ -107,8 +108,8 @@ const Post = (props) => {
 
             <div className="post-details">
               <span className="author-details">
-                <Avatar name={post.author} />
-                <span className="author-username">{post.author}</span>
+              <GiSpikedHalo />
+                <span className="author-username"> - {post.author}</span>
               </span>
               <span>{dayjs.unix(post.created_utc).fromNow()}</span>
               <span className="post-comments-container">

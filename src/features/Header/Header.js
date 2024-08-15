@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTerm } from "../../store/redditslice";
+import { setSearchTerm } from "../../store/redditSlice";
 import { FaReddit } from 'react-icons/fa';
+import { FaSun, FaMoon } from "react-icons/fa";
 import { HiOutlineSearch } from 'react-icons/hi';
 import './Header.css'
 // import for search term and incooperate search reducer too
@@ -24,16 +25,20 @@ const Header = () => {
       dispatch(setSearchTerm(searchTermLocal));
     };
 
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-    useEffect(() => {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-    }, [theme]);
-  
-    const toggleTheme = () => {
-      setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-    };
+    //Dark Mode Functions
+
+      const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    
+      useEffect(() => {
+        document.documentElement.setAttribute('data-theme',  
+     theme);
+        localStorage.setItem('theme', theme);
+      }, [theme]);
+    
+      const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+      };
   
     return (
       <header>
@@ -46,21 +51,21 @@ const Header = () => {
         <form className="search" onSubmit={onSearchTermSubmit}>
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search Subreddits"
             value={searchTermLocal}
             onChange={onSearchTermChange}
-            aria-label="Search posts"
+            aria-label="Search Subreddits"
           />
           <button type="submit" onClick={onSearchTermSubmit} aria-label="Search">
             <HiOutlineSearch />
           </button>
         </form>
 
-      <div className="toggle">
-      <button onClick={toggleTheme}>
-        Switch to {theme === 'light' ? 'dark' : 'light'} mode
-      </button>
-      </div>
+        <div className="toggle"> 
+          <button onClick={toggleTheme}>
+            {theme === 'light' ? <FaMoon /> : <FaSun />}
+          </button>
+          </div>
 
       </header>
     );
