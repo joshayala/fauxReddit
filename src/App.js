@@ -4,10 +4,10 @@ import Header from './features/Header/Header';
 import Main from './features/Main/Main';
 import Subreddits from './features/Subreddits/Subreddits';
 import { useState } from 'react';
+import BackToTopButton from './features/BackToTop/BackToTopButton';
 
 function App() {
   const [showSubreddits, setShowSubreddits] = useState(true);
-
   const toggleSubreddits = () => {
     setShowSubreddits(!showSubreddits);
   };
@@ -18,9 +18,8 @@ function App() {
       <main className={showSubreddits ? '' : 'full-width'}>
         <Main />
       </main>
-     
         {showSubreddits && <Subreddits />}
-      
+        <BackToTopButton />
     </>
   );
 }
