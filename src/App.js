@@ -6,7 +6,7 @@ import Subreddits from './features/Subreddits/Subreddits';
 import { useState } from 'react';
 
 function App() {
-  const [showSubreddits, setShowSubreddits] = useState(false);
+  const [showSubreddits, setShowSubreddits] = useState(true);
 
   const toggleSubreddits = () => {
     setShowSubreddits(!showSubreddits);
