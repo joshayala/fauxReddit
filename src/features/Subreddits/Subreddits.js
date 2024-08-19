@@ -6,7 +6,7 @@ import './Subreddits.css';
 import {
   setSelectedSubreddit,
   selectSelectedSubreddit,
-} from '../../store/redditSlice';
+} from '../../store/redditslice';
 
  const Subreddits = () => {
   const dispatch = useDispatch();

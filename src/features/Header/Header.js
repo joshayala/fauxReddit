@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchTerm } from "../../store/redditSlice";
+import { setSearchTerm } from "../../store/redditslice";
 import { FaReddit } from 'react-icons/fa';
 import { FaSun, FaMoon } from "react-icons/fa";
 import { HiOutlineSearch } from 'react-icons/hi';

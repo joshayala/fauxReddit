@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import redditReducer from './redditSlice';
+import redditReducer from './redditslice';
 import subRedditReducer from './subredditslice'
 //The REDUX Store
 

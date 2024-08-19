@@ -10,7 +10,7 @@ import {
   setSearchTerm,
   fetchComments,
   searchPosts,
-} from '../../store/redditSlice'
+} from '../../store/redditslice'
 import './Main.css';
 
 const Main = () => {
