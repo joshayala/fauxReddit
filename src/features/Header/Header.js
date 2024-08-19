@@ -8,7 +8,7 @@ import './Header.css'
 import { TfiMenu } from "react-icons/tfi";
 
 const Header = ({ toggleSubreddits }) => {
-
+    //Notes for myself
     //This is a React hook to 'grab' our current search bar string
     const [searchTermLocal, setSearchTermLocal] = useState('');
     //This is a Redux Selector for easy access to our stored state.
@@ -17,7 +17,6 @@ const Header = ({ toggleSubreddits }) => {
     //This is just a Redux Dispatcher
     const dispatch = useDispatch();
 
-    
     //When Search is Submitted on UI
     //This will dispatch an action to a reducer to change the state.
     const onSearchTermSubmit = (e) => {
@@ -38,7 +37,6 @@ const Header = ({ toggleSubreddits }) => {
 
 
     //Dark Mode Functions
-
       const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     
       useEffect(() => {
@@ -51,21 +49,22 @@ const Header = ({ toggleSubreddits }) => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
       };
   
+
     return (
       <header>
         <div className="logo">
           <FaReddit className="logo-icon" />
           <p>
-            Faux<span>Reddit</span>
+            faux<span>Reddit</span>
           </p>
         </div>
         <form className="search" onSubmit={onSearchTermSubmit}>
           <input
             type="text"
-            placeholder="Search FauxReddit"
+            placeholder="Search fauxReddit"
             value={searchTermLocal}
             onChange={onSearchTermChange}
-            aria-label="Search Subreddits"
+            aria-label="Search fauxReddit"
           />
           <button type="submit" onClick={onSearchTermSubmit} aria-label="Search">
             <HiOutlineSearch />
@@ -86,18 +85,3 @@ const Header = ({ toggleSubreddits }) => {
   };
   
   export default Header;
-
-  /*
-          <div>
-      {error && <p>Error: {error}</p>}
-      {searchResults.length > 0 ? (
-        <ul>
-          {searchResults.map((subreddit) => (
-            <li key={subreddit.data.id}>{subreddit.data.display_name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No results found.</p>
-      )}
-        </div>
-  */

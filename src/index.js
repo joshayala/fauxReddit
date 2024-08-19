@@ -15,8 +15,6 @@ root.render(
   </React.StrictMode>
 );
 
-//Order of Components:
-//[App > (Header, Main, Subreddit) > Post > Card > ]
 
 
 

@@ -24,7 +24,7 @@ const Post = (props) => {
 
   /**
    * Handle vote button clicks.
-   * @param {number} newValue The new vote value.
+   * @param {number} newValue The new vote number value.
    */
   const onHandleVote = (newValue) => {
     setVoteValue(voteValue === newValue ? 0 : newValue);
@@ -73,6 +73,37 @@ const Post = (props) => {
     return null;
   };
 
+
+  //Img function
+  const displayImage = () => {
+    if (post.url && (post.url.includes('jpeg') || post.url.includes('png')|| post.url.includes('gif') || post.url.includes('jpg') 
+      || post.url.includes('gallery'))) {
+        return <img src={post.url} className='post-image' alt={post.title}/>
+      } else {
+        return
+      }
+  };
+
+  /* VIDEO FEATURE TO COME
+    const displayVideo = () => {
+    if (post.media.reddit_video) {
+      return (<video> 
+        <source src={post.media.reddit_video.fallback_url} />
+      </video>)
+    } else {
+      return
+    }
+  }
+  */
+
+  //Truncate Text
+  const [isExpanded, setIsExpanded] = useState(false);
+  const characterLimit = 350;
+
+  const truncatedText = post.selftext.length > characterLimit
+    ? post.selftext.substring(0, characterLimit) + "..."
+    : post.selftext;
+
   return (
     <article key={post.id}>
       <Card>
@@ -98,20 +129,28 @@ const Post = (props) => {
               {renderDownVote()}
             </button>
           </div>
-          <div className="post-container">
+          <div className="post-container" text-overflow="ellipsis">
             <h3 className="post-title">{post.title}</h3>
-              <p > {post.selftext} </p>
+            <div>
+              <p>{isExpanded ? post.selftext : truncatedText}</p>
+              {post.selftext.length > characterLimit && (
+                <button onClick={() => setIsExpanded(!isExpanded)} className='readmore'>
+                  {isExpanded ? 'Read Less' : 'Read More'}
+                </button>
+                )}
+            </div>
             <div className="post-image-container">
           
-            <img src={ post.url && (post.url.includes('jpeg') || post.url.includes('png')|| post.url.includes('gif') || post.url.includes('jpg') 
-             || post.url.includes('gallery'))? post.url : post.thumbnail} 
-              alt={post.title} className="post-image" 
-              />
+              {displayImage()}
+              {/*displayVideo()*/}
 
-           { post.url.includes('mp4') ? 
-            (
-           <video src={post.url_overridden_by_dest}></video> ) : <p hidden >no vid</p>
-          }
+              { /*  VIDEO FEATURE TO COME
+                post.hasOwnProperty('secure_media') && post.secure_media.reddit_video ? (
+                  <video src={ post.secure_media.reddit_video.hls_url}></video>
+                ) : (
+                  <video src=''></video> // Or any other content you want to display
+                )
+              */ }
             </div>
 
             <div className="post-details">

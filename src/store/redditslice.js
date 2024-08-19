@@ -42,7 +42,7 @@ const initialState = {
           .showingComments;
       },
       startGetComments(state, action) {
-        // If we're hiding comment, don't fetch the comments.
+        // If we're hiding comment, don't fetch any comments.
         state.posts[action.payload].showingComments = !state.posts[action.payload]
           .showingComments;
         if (!state.posts[action.payload].showingComments) {
@@ -89,7 +89,8 @@ const initialState = {
       dispatch(startGetPosts());
       const posts = await getSubredditPosts(subreddit);
   
-      // We are adding showingComments and comments as additional fields to handle showing them when the user wants to. We need to do this because we need to call another API endpoint to get the comments for each post.
+      // We are adding showingComments and comments as additional fields to handle showing them when the user wants to. 
+      //We need to do this because we need to call another API endpoint to get the comments for each post.
       const postsWithMetadata = posts.map((post) => ({
         ...post,
         showingComments: false,
@@ -108,7 +109,6 @@ const initialState = {
       dispatch(startGetPosts());
       const posts = await getSubredditsbySearch(searchTerm);
   
-      // We are adding showingComments and comments as additional fields to handle showing them when the user wants to. We need to do this because we need to call another API endpoint to get the comments for each post.
       const postsWithMetadata = posts.map((post) => ({
         ...post,
         showingComments: false,
@@ -137,9 +137,7 @@ const initialState = {
     state.reddit.selectedSubreddit;
   
 
-    //Come back to this one.
-    //This function I want to replace with a function that will
-    //return posts from the given searchTerm
+    //Selector that returns any posts to load to the UI
   export const postsToLoad = createSelector(
     [selectPosts, selectSearchTerm],
     (posts, searchTerm) => {
@@ -150,7 +148,6 @@ const initialState = {
     }
   );
 
-  // .filter((post) => post.title.toLowerCase().includes(searchTerm.toLowerCase()));
   
 
 
