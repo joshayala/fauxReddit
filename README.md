@@ -25,14 +25,13 @@ The purpose of this project is to build a React Web Application using the knowle
 + HTTP Requests and Responses
 + Node.js
 + Git
-+ React
-+ Authentication
++ React.js
 + Redux and Redux Toolkit
 
 ## How to use
 To view the website, click the following link:
 ```
-Currently under construction!
+https://fauxreddit.netlify.app
 ```
 Once on the site:
 1. Browse the main page
@@ -41,7 +40,7 @@ Once on the site:
 4. Search for other posts of interest
 
 ## Status
-The goals for the assignnment are currently under development as of August 13th 2024.
+Development begain August 13th 2024. The goals for this project were completed August 19th 2024. Further additions and adjustments are being considered. 
 
 ## License
 This Project has an MIT License.
