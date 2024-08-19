@@ -5,25 +5,36 @@ import { FaReddit } from 'react-icons/fa';
 import { FaSun, FaMoon } from "react-icons/fa";
 import { HiOutlineSearch } from 'react-icons/hi';
 import './Header.css'
-// import for search term and incooperate search reducer too
+import { TfiMenu } from "react-icons/tfi";
 
-const Header = () => {
+const Header = ({ toggleSubreddits }) => {
+
+    //This is a React hook to 'grab' our current search bar string
     const [searchTermLocal, setSearchTermLocal] = useState('');
+    //This is a Redux Selector for easy access to our stored state.
+    //Particularly our stored searchTerm
     const searchTerm = useSelector((state) => state.reddit.searchTerm);
+    //This is just a Redux Dispatcher
     const dispatch = useDispatch();
-  
-    const onSearchTermChange = (e) => {
-      setSearchTermLocal(e.target.value);
-    };
-  
-    useEffect(() => {
-      setSearchTermLocal(searchTerm);
-    }, [searchTerm]);
-  
+
+    
+    //When Search is Submitted on UI
+    //This will dispatch an action to a reducer to change the state.
     const onSearchTermSubmit = (e) => {
       e.preventDefault();
       dispatch(setSearchTerm(searchTermLocal));
     };
+    //Part of our React Hook. 
+    //This will allow to capture an event of our search bar string changing and storing it in searchTermLocal.
+    const onSearchTermChange = (e) => {
+      setSearchTermLocal(e.target.value);
+    };
+  
+    //Then this will constantly fire each time searchTerm inside our Store changes.
+    // This changes our React State searchTermLocal to whatever is stored in our Redux Store.
+    useEffect(() => {
+      setSearchTermLocal(searchTerm);
+    }, [searchTerm]);
 
 
     //Dark Mode Functions
@@ -51,7 +62,7 @@ const Header = () => {
         <form className="search" onSubmit={onSearchTermSubmit}>
           <input
             type="text"
-            placeholder="Search Subreddits"
+            placeholder="Search FauxReddit"
             value={searchTermLocal}
             onChange={onSearchTermChange}
             aria-label="Search Subreddits"
@@ -62,6 +73,9 @@ const Header = () => {
         </form>
 
         <div className="toggle"> 
+        <button onClick={toggleSubreddits}>
+          <TfiMenu />
+        </button>
           <button onClick={toggleTheme}>
             {theme === 'light' ? <FaMoon /> : <FaSun />}
           </button>
@@ -72,3 +86,18 @@ const Header = () => {
   };
   
   export default Header;
+
+  /*
+          <div>
+      {error && <p>Error: {error}</p>}
+      {searchResults.length > 0 ? (
+        <ul>
+          {searchResults.map((subreddit) => (
+            <li key={subreddit.data.id}>{subreddit.data.display_name}</li>
+          ))}
+        </ul>
+      ) : (
+        <p>No results found.</p>
+      )}
+        </div>
+  */

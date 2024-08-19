@@ -34,8 +34,8 @@ import {
             >
               <img
                 src={
-                  subreddit.icon_img ||  subreddit.header_img || subreddit.thumbnail ||
-                  `https://api.adorable.io/avatars/25/${subreddit.display_name}`
+                  subreddit.icon_img ||  subreddit.header_img || subreddit.thumbnail || subreddit.community_icon || subreddit.banner_img||
+                  `https://i.redd.it/t5366y1q680d1.png`
                 }
                 alt={`${subreddit.display_name}`}
                 className="subreddit-icon"

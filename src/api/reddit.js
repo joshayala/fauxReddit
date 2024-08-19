@@ -1,5 +1,6 @@
 export const API_ROOT = 'https://www.reddit.com';
 
+// This is going to the Reddit Slice
 export const getSubredditPosts = async (subreddit) => {
   const response = await fetch(`${API_ROOT}${subreddit}/.json?raw_json=1`);
   const json = await response.json();
@@ -7,6 +8,7 @@ export const getSubredditPosts = async (subreddit) => {
   return json.data.children.map((post) => post.data);
 };
 
+//This is going to the Subeddit Slice
 export const getSubreddits = async () => {
   const response = await fetch(`${API_ROOT}/subreddits.json?raw_json=1`);
   const json = await response.json();
@@ -14,6 +16,7 @@ export const getSubreddits = async () => {
   return json.data.children.map((subreddit) => subreddit.data);
 };
 
+//This is going to the Reddit Slice
 export const getPostComments = async (permalink) => {
   const response = await fetch(`${API_ROOT}${permalink}.json`);
   const json = await response.json();
@@ -21,64 +24,30 @@ export const getPostComments = async (permalink) => {
   return json[1].data.children.map((subreddit) => subreddit.data);
 };
 
-export const search = async ({ searchTerm = '', after = '', before = '', count }) => {
-    try {
-        const queryParams = new URLSearchParams({
-            q: searchTerm,
-            after,
-            before,
-            count,
-            limit: '25',
-        });
-        const response = await fetch(`${API_ROOT}/search.json?${queryParams}`);
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`${response.status}: ${errorData.code}- ${errorData.message}`);
-        }
-        const json = await response.json();
-
-        const postsWithLogo = await Promise.all(json.data.children.map(async (post) => {
-            const logoUrl = await getSubredditLogo(post.data.subreddit_name_prefixed);
-            return { ...post, data: {...post.data, icon_img: logoUrl} };
-        }));  
-        const completeObject = {
-            ...json, 
-            data:{
-                ...json.data,
-                children: postsWithLogo
-            }
-        }
-        return completeObject        
-    } catch (error) {
-        throw Error (error);      
-    } 
-    
-}
-
+//This is going to the Reddit Slice for the Header Component to use.
 export const getSubredditsbySearch = async (searchTerm) => {
     try {
-        const response = await fetch(`${API_ROOT}/subreddits/search.json?q=${searchTerm}`);
+        const response = await fetch(`${API_ROOT}/search.json?q=${searchTerm}`);
+        
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`${response.status} - ${errorData.message}`);
+            // Attempt to parse error response as JSON
+            let errorMessage = `${response.status} - ${response.statusText}`;
+            try {
+                const errorData = await response.json();
+                errorMessage = `${response.status} - ${errorData.message || response.statusText}`;
+            } catch (jsonError) {
+                // If parsing fails, use the status text
+                errorMessage = `${response.status} - ${response.statusText}`;
+            }
+            throw new Error(errorMessage);
         }
+        
         const json = await response.json();
-        return json.data.children;        
+         
+        return json.data.children.map((post) => post.data); 
+        
     } catch (error) {
-        throw Error (error);       
+        // Rethrow the original error
+        throw error;       
     }     
 };
-
-export const getSubredditLogo = async (subredditName) => {
-    try {
-        const response = await fetch(`${API_ROOT}/${subredditName}/about.json`);
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(`${response.status} - ${errorData.message}`);
-        }
-        const json = await response.json();
-        return json.data.icon_img;        
-    } catch (error) {
-        throw Error (error);    
-    }    
-}

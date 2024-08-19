@@ -6,21 +6,28 @@ import PostLoading from '../Post/PostLoading';
 import getRandomNumber from '../../utils/getRandomNumber';
 import {
   fetchPosts,
-  selectFilteredPosts,
+  postsToLoad,
   setSearchTerm,
   fetchComments,
+  searchPosts,
 } from '../../store/redditSlice'
 import './Main.css';
 
 const Main = () => {
   const reddit = useSelector((state) => state.reddit);
   const { isLoading, error, searchTerm, selectedSubreddit } = reddit;
-  const posts = useSelector(selectFilteredPosts);
+  const posts = useSelector(postsToLoad);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchPosts(selectedSubreddit));
-  }, [selectedSubreddit]);
+  }, [dispatch, selectedSubreddit]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      dispatch(searchPosts(searchTerm));
+    }
+  }, [dispatch, searchTerm]);
 
   const onToggleComments = (index) => {
     const getComments = (permalink) => {

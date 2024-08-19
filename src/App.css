@@ -74,3 +74,8 @@ body {
 p {
   margin: 0;
 }
+
+
+.full-width {
+  grid-column: 1/-1; /* Span all columns */
+}

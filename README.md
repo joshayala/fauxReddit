@@ -30,7 +30,7 @@ The Purpose of this project is to build a React Web Application using the knowle
 + Redux and Redux Toolkit
 
 ## How to use
-To view the website, click the follwing link:
+To view the website, click the following link:
 ```
 Currently under construction!
 ```
@@ -38,7 +38,7 @@ Once on the site:
 1. Browse the main page
 2. Browser the subreddit aside panel
 3. Rate any posts
-4. Search for any posts of interest
+4. Search for other Subreddits of interest
 
 ## Status
 The goals for the assignnment are currently under development as of August 13th 2024.

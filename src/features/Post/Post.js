@@ -13,7 +13,6 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import shortenNumber from '../../utils/shortenRandomNumber';
 import Card from '../../components/Card/Card';
 import Comment from '../Comment/Comment';
-import Avatar from '../Avatar/Avatar';
 import { GiSpikedHalo } from "react-icons/gi";
 
 dayjs.extend(relativeTime);
@@ -101,9 +100,18 @@ const Post = (props) => {
           </div>
           <div className="post-container">
             <h3 className="post-title">{post.title}</h3>
-
+              <p > {post.selftext} </p>
             <div className="post-image-container">
-              <img src={post.url} alt={post.title} className="post-image" />
+          
+            <img src={ post.url && (post.url.includes('jpeg') || post.url.includes('png')|| post.url.includes('gif') || post.url.includes('jpg') 
+             || post.url.includes('gallery'))? post.url : post.thumbnail} 
+              alt={post.title} className="post-image" 
+              />
+
+           { post.url.includes('mp4') ? 
+            (
+           <video src={post.url_overridden_by_dest}></video> ) : <p hidden >no vid</p>
+          }
             </div>
 
             <div className="post-details">

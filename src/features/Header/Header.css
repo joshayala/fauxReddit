@@ -36,6 +36,7 @@ header .logo {
     padding: var(--spacing-1) var(--spacing-2);
     height: max-content;
     border-radius: var(--radius);
+    color: var(--color-text-header)
   }
   
   .search button {

@@ -8,6 +8,7 @@ const store = configureStore({
         // Add your reducers here
         reddit: redditReducer,
         subreddits: subRedditReducer,
+
     }),
 });
 
