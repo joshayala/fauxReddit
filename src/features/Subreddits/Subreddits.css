@@ -1,6 +1,6 @@
 .subreddit-card {
     padding-right: var(--spacing-2);
-    margin-right: var(--spacing-2);
+    margin-right: var(--spacing-1);
   }
   
   .subreddit-card h2 {

@@ -1,5 +1,5 @@
 .post-votes-value-loading {
-    width: 2ch !important;
+    width: 3rem;
   }
   
   .post {
@@ -11,5 +11,24 @@
     padding: var(--spacing-3);
     transition: box-shadow 0.1s ease-in;
     color: var(--color-text-secondary);
+    flex-direction: row; 
+    align-items: center; 
   }
   
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .post {
+      flex-direction: column; 
+      padding: var(--spacing-2); 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .post {
+      padding: var(--spacing-1); 
+    }
+  
+    .post-votes-value-loading {
+      width: 2rem; 
+    }
+  }

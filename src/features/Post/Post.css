@@ -22,13 +22,15 @@
   }
   
   .post-image-container {
-    width: 100%;
+  
     overflow: hidden;
     border-radius: var(--radius-2);
   }
   
   .post-image-container .post-image {
-    width: 600px;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
   }
   
   .post-title {
