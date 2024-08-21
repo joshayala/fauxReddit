@@ -62,7 +62,7 @@ const Post = (props) => {
 
     if (post.showingComments) {
       return (
-        <div>
+        <div className='comments-list'>
           {post.comments.map((comment) => (
             <Comment comment={comment} key={comment.id} />
           ))}
@@ -117,9 +117,11 @@ const Post = (props) => {
             >
               {renderUpVote()}
             </button>
+
             <p className={`post-votes-value ${getVoteType()}`}>
               {shortenNumber(post.ups, 1)}
             </p>
+
             <button
               type="button"
               className={`icon-action-button down-vote ${voteValue === -1 ? 'active' : ''}`}
@@ -128,8 +130,9 @@ const Post = (props) => {
             >
               {renderDownVote()}
             </button>
+
           </div>
-          <div className="post-container" text-overflow="ellipsis">
+          <div className="post-container" >
             <h3 className="post-title">{post.title}</h3>
             <div>
               <p>{isExpanded ? post.selftext : truncatedText}</p>
@@ -139,11 +142,11 @@ const Post = (props) => {
                 </button>
                 )}
             </div>
-            <div className="post-image-container">
-          
-              {displayImage()}
-              {/*displayVideo()*/}
 
+            <div className="post-image-container">
+              {displayImage()}
+
+              {/*displayVideo()*/}
               { /*  VIDEO FEATURE TO COME
                 post.hasOwnProperty('secure_media') && post.secure_media.reddit_video ? (
                   <video src={ post.secure_media.reddit_video.hls_url}></video>
@@ -151,28 +154,31 @@ const Post = (props) => {
                   <video src=''></video> // Or any other content you want to display
                 )
               */ }
+
             </div>
 
             <div className="post-details">
-              <span className="author-details">
-              <GiSpikedHalo />
-                <span className="author-username"> - {post.author}</span>
-              </span>
-              <span>{dayjs.unix(post.created_utc).fromNow()}</span>
-              <span className="post-comments-container">
-                <button
-                  type="button"
-                  className={`icon-action-button ${post.showingComments ? 'showing-comments' : ''}`}
-                  onClick={() => onToggleComments(post.permalink)}
-                  aria-label="Show comments"
-                >
-                  <TiMessage className="icon-action" />
-                </button>
-                {shortenNumber(post.num_comments, 1)}
-              </span>
-            </div>
+       
+                <span className="author-details">
+                <GiSpikedHalo />
+                  <span className="author-username"> - {post.author}</span>
+                </span>
+                <span>{dayjs.unix(post.created_utc).fromNow()}</span>
+                <span className="post-comments-container">
+                  <button
+                    type="button"
+                    className={`icon-action-button ${post.showingComments ? 'showing-comments' : ''}`}
+                    onClick={() => onToggleComments(post.permalink)}
+                    aria-label="Show comments"
+                  >
+                    <TiMessage className="icon-action" />
+                  </button>
+                  {shortenNumber(post.num_comments, 1)}
+                </span>
 
-            {renderComments()}
+                {renderComments()}
+              </div>
+
           </div>
         </div>
       </Card>

@@ -4,6 +4,7 @@
     padding: var(--spacing-2);
     transition: box-shadow 0.1s ease-in;
     border-radius: var(--border-radius);
+    max-width: 100%;
   }
   
   .comment:hover {
@@ -22,7 +23,34 @@
   }
   
   .comment-author {
+    display: flex;
     font-weight: bold;
     color: var(--color-branding);
   }
   
+  #comment-body{
+    display: flex;
+    max-height: 20px;
+    overflow: scroll;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .comment {
+      margin: var(--spacing-1) 0;
+      padding: var(--spacing-2);
+      transition: box-shadow 0.1s ease-in;
+      border-radius: var(--border-radius);
+      max-width: 100%;
+      justify-content: flex-start;
+    }
+    .comment-metadata {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: var(--spacing-1);
+      align-items: center;
+    }
+    .comment-text{
+      display: flex;
+    }
+    
+  }

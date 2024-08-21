@@ -1,23 +1,22 @@
 header {
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  justify-content: space-between; /* Evenly space elements horizontally */
+  align-items: center; /* Center elements vertically */
   color: var(--color-branding);
   background: var(--color-foreground);
   box-shadow: var(--box-shadow);
-  height: auto; 
-  padding: 0 var(--spacing-5);
+  height: auto;
+  padding: 0 var(--spacing-1);
 }
 
 header .logo {
   font-weight: bold;
   padding: var(--spacing-1) 0;
-  grid-column: 1 / 2;
   display: flex;
   align-items: center;
 }
 
 header .logo-icon {
-  grid-column: 2 / 3;
   margin-right: var(--spacing-1);
   font-size: 2rem;
 }
@@ -29,16 +28,23 @@ header span {
 .search {
   display: flex;
   align-items: center;
+  width: 100%; /* Make sure the container takes the full width */
+  max-width: 800px; /* Optional: Set a maximum width for larger screens */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: var(--spacing-1); /* Add padding if needed */
 }
 
+/* Style the input field */
 .search input {
-  flex-grow: 1;
+  flex-grow: 1; /* Allow the input to grow and shrink */
   background: var(--color-background-secondary);
   border: none;
   padding: var(--spacing-1) var(--spacing-2);
-  height: auto; 
+  height: auto;
   border-radius: var(--radius);
   color: var(--color-text-header);
+  font-size: 1rem; /* Set a base font size */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
 .search button {
@@ -51,9 +57,7 @@ header span {
 
 .toggle {
   display: flex;
-  align-items: center;
-  grid-column: 3;
-  justify-content: flex-end;
+  align-items: center; /* Center elements vertically */
 }
 
 .toggle button {
@@ -66,24 +70,25 @@ header span {
   padding: var(--spacing-1) var(--spacing-2);
   transition: background-color 0.3s ease, border-color 0.3s ease;
   color: var(--color-text-body);
-  font-size: 1rem;
 }
 
 /* Responsive styles */
 @media (max-width: 768px) {
   header {
-    grid-template-columns: auto auto auto; 
+    justify-content: flex-end; 
   }
-  .toggle {
-    grid-column:  3; 
+  .search input{
+    padding: var(--spacing-1) var(--spacing-1);
+    width: 4px;
   }
-}
-
-@media (max-width: 480px) {
-  header {
-    grid-template-columns: auto auto auto; 
+  .toggle button {
+    padding: var(--spacing-1) var(--spacing-1);
   }
-  .toggle {
-    grid-column: 3; 
+  .logo-icon {
+    margin-right: var(--spacing-0);
+    font-size: .5rem;
+  }
+  .logoName{
+    display: none;
   }
 }

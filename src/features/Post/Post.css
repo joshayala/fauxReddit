@@ -1,9 +1,14 @@
 .post-wrapper {
     display: flex;
+    box-sizing: border-box;
+    height: auto;
   }
   
   .post-container {
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: 2;
   }
   
   .post-details {
@@ -14,6 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: auto;
   }
   
   .post-details .author-username {
@@ -22,14 +28,17 @@
   }
   
   .post-image-container {
-  
     overflow: hidden;
     border-radius: var(--radius-2);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   
   .post-image-container .post-image {
-    width: 100%;
-    max-width: 1200px;
+    width: auto;
+    max-width: 100%;
+    display: flex;
     height: auto;
   }
   
@@ -127,3 +136,31 @@
     color: var(--color-branding);
   }
   
+  .comments-list{
+      max-height: 500px;
+      width: 100%;
+      overflow: scroll;
+      display: flex;
+      flex-direction: column;
+
+    }
+
+  @media only screen and (max-width: 768px) {
+    .post-details {
+      margin-top: var(--spacing-1);
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--spacing-1);
+      font-size: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+    }
+    .comments-list {
+      max-width: 100%;
+    }
+    .post-votes-container{
+      margin-right: var(--spacing-1);
+    }
+    
+  }

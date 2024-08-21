@@ -54,7 +54,7 @@ const Header = ({ toggleSubreddits }) => {
       <header>
         <div className="logo">
           <FaReddit className="logo-icon" />
-          <p>
+          <p className="logoName">
             faux<span>Reddit</span>
           </p>
         </div>
@@ -72,13 +72,13 @@ const Header = ({ toggleSubreddits }) => {
         </form>
 
         <div className="toggle"> 
-        <button onClick={toggleSubreddits}>
-          <TfiMenu />
-        </button>
+          <button onClick={toggleSubreddits}>
+            <TfiMenu />
+           </button>
           <button onClick={toggleTheme}>
             {theme === 'light' ? <FaMoon /> : <FaSun />}
           </button>
-          </div>
+        </div>
 
       </header>
     );

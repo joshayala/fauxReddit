@@ -17,11 +17,12 @@ const Comment = (props) => {
   return (
     <div className="comment">
       <div className="comment-metadata">
-      <GiCharacter />
-        <p className="comment-author"> | {comment.author}</p>
+        <p className="comment-author"> {<GiCharacter />} {comment.author}</p>
         <p className="comment-created-time">{createdTime}</p>
       </div>
-      <ReactMarkdown>{comment.body}</ReactMarkdown>
+      <div className='comment-text'>
+        <ReactMarkdown id={"markdown"}>{comment.body}</ReactMarkdown>
+      </div>
     </div>
   );
 };
