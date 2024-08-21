@@ -29,13 +29,16 @@ const Main = () => {
     }
   }, [dispatch, searchTerm]);
 
-  const onToggleComments = (index) => {
-    const getComments = (permalink) => {
-      dispatch(fetchComments(index, permalink));
+
+
+    const onToggleComments = (index) => {
+      return (permalink) => {
+        dispatch(fetchComments(index, permalink));
+      };
     };
 
-    return getComments;
-  };
+  
+  
 
   if (isLoading) {
     const loadingPlaceholders = Array.from({ length: getRandomNumber(3, 10) }).map((_, index) => (

@@ -29,7 +29,6 @@
   }
   
   #comment-body{
-    display: flex;
     max-height: 20px;
     overflow: scroll;
   }
@@ -51,6 +50,7 @@
     }
     .comment-text{
       display: flex;
+      flex-direction: column;
     }
     
   }

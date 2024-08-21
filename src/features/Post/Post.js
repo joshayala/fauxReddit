@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import Skeleton from 'react-loading-skeleton';
 import './Post.css';
 import {
@@ -14,18 +14,17 @@ import shortenNumber from '../../utils/shortenRandomNumber';
 import Card from '../../components/Card/Card';
 import Comment from '../Comment/Comment';
 import { GiSpikedHalo } from "react-icons/gi";
+import { useMediaQuery } from 'react-responsive';
 
 dayjs.extend(relativeTime);
 
 const Post = (props) => {
   const [voteValue, setVoteValue] = useState(0);
-
   const { post, onToggleComments } = props;
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isTablet = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1024px)' });
+  const isDesktop = useMediaQuery({ query: '(min-width: 1025px)' });
 
-  /**
-   * Handle vote button clicks.
-   * @param {number} newValue The new vote number value.
-   */
   const onHandleVote = (newValue) => {
     setVoteValue(voteValue === newValue ? 0 : newValue);
   };
@@ -73,30 +72,30 @@ const Post = (props) => {
     return null;
   };
 
-
-  //Img function
   const displayImage = () => {
-    if (post.url && (post.url.includes('jpeg') || post.url.includes('png')|| post.url.includes('gif') || post.url.includes('jpg') 
-      || post.url.includes('gallery'))) {
-        return <img src={post.url} className='post-image' alt={post.title}/>
-      } else {
-        return
+    if (post.url && (post.url.includes('jpeg') || post.url.includes('png') || post.url.includes('gif') || post.url.includes('jpg'))) {
+      let imageUrl = post.url;
+      if (isMobile) {
+        imageUrl = `${post.url}?w=400`;
+      } else if (isTablet) {
+        imageUrl = `${post.url}?w=1200`;
+      } else if (isDesktop) {
+        imageUrl = `${post.url}?w=1800`;
       }
+
+      return (
+        <img
+          src={imageUrl}
+          className='post-image'
+          alt={post.title}
+          loading="lazy"
+        />
+      );
+    } else {
+      return null;
+    }
   };
 
-  /* VIDEO FEATURE TO COME
-    const displayVideo = () => {
-    if (post.media.reddit_video) {
-      return (<video> 
-        <source src={post.media.reddit_video.fallback_url} />
-      </video>)
-    } else {
-      return
-    }
-  }
-  */
-
-  //Truncate Text
   const [isExpanded, setIsExpanded] = useState(false);
   const characterLimit = 350;
 
@@ -108,6 +107,7 @@ const Post = (props) => {
     <article key={post.id}>
       <Card>
         <div className="post-wrapper">
+            <h3 className="post-title">{post.title}</h3>
           <div className="post-votes-container">
             <button
               type="button"
@@ -130,55 +130,43 @@ const Post = (props) => {
             >
               {renderDownVote()}
             </button>
-
           </div>
-          <div className="post-container" >
-            <h3 className="post-title">{post.title}</h3>
+
+          <div className="post-container">
             <div>
               <p>{isExpanded ? post.selftext : truncatedText}</p>
               {post.selftext.length > characterLimit && (
                 <button onClick={() => setIsExpanded(!isExpanded)} className='readmore'>
                   {isExpanded ? 'Read Less' : 'Read More'}
                 </button>
-                )}
+              )}
             </div>
 
             <div className="post-image-container">
               {displayImage()}
-
-              {/*displayVideo()*/}
-              { /*  VIDEO FEATURE TO COME
-                post.hasOwnProperty('secure_media') && post.secure_media.reddit_video ? (
-                  <video src={ post.secure_media.reddit_video.hls_url}></video>
-                ) : (
-                  <video src=''></video> // Or any other content you want to display
-                )
-              */ }
-
             </div>
 
             <div className="post-details">
-       
-                <span className="author-details">
+              <span className="author-details">
                 <GiSpikedHalo />
-                  <span className="author-username"> - {post.author}</span>
-                </span>
-                <span>{dayjs.unix(post.created_utc).fromNow()}</span>
-                <span className="post-comments-container">
-                  <button
-                    type="button"
-                    className={`icon-action-button ${post.showingComments ? 'showing-comments' : ''}`}
-                    onClick={() => onToggleComments(post.permalink)}
-                    aria-label="Show comments"
-                  >
-                    <TiMessage className="icon-action" />
-                  </button>
-                  {shortenNumber(post.num_comments, 1)}
-                </span>
-
-                {renderComments()}
-              </div>
-
+                <span className="author-username"> - {post.author}</span>
+              </span>
+              <span>{dayjs.unix(post.created_utc).fromNow()}</span>
+              <span className="post-comments-container">
+                <button
+                  type="button"
+                  className={`icon-action-button ${post.showingComments ? 'showing-comments' : ''}`}
+                  onClick={() => onToggleComments(post.permalink)}
+                  aria-label="Show comments"
+                >
+                  <TiMessage className="icon-action" />
+                </button>
+                {shortenNumber(post.num_comments, 1)}
+              </span>
+            </div>
+            <div>
+            {renderComments()}
+            </div>
           </div>
         </div>
       </Card>
