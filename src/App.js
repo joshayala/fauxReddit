@@ -1,10 +1,11 @@
-import './App.css';
-import React from 'react';
-import Header from './features/Header/Header';
-import Main from './features/Main/Main';
-import Subreddits from './features/Subreddits/Subreddits';
-import { useState } from 'react';
-import BackToTopButton from './features/BackToTop/BackToTopButton';
+import "./App.css";
+import React from "react";
+import Header from "./features/Header/Header";
+import Main from "./features/Main/Main";
+import Subreddits from "./features/Subreddits/Subreddits";
+import { useState } from "react";
+import BackToTopButton from "./features/BackToTop/BackToTopButton";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 
 function App() {
   const [showSubreddits, setShowSubreddits] = useState(false);
@@ -16,11 +17,13 @@ function App() {
     <>
       <Header toggleSubreddits={toggleSubreddits} />
 
-      <main className={showSubreddits ? '' : 'full-width'}>
-        <Main />
-      </main>
+      <ErrorBoundary>
+        <main className={showSubreddits ? "" : "full-width"}>
+          <Main />
+        </main>
 
-      {showSubreddits && <Subreddits />}
+        {showSubreddits && <Subreddits />}
+      </ErrorBoundary>
 
       <BackToTopButton />
     </>
