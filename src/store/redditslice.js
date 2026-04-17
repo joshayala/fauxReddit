@@ -82,10 +82,14 @@ export const {
 export default redditSlice.reducer;
 
 // This is a Redux Thunk that gets posts from a subreddit.
+let fetchPostsController;
 export const fetchPosts = (subreddit) => async (dispatch) => {
+  if (fetchPostsController) fetchPostsController.abort();
+  fetchPostsController = new AbortController();
+  const { signal } = fetchPostsController;
   try {
     dispatch(startGetPosts());
-    const posts = await getSubredditPosts(subreddit);
+    const posts = await getSubredditPosts(subreddit, { signal });
 
     // We are adding showingComments and comments as additional fields to handle showing them when the user wants to.
     //We need to do this because we need to call another API endpoint to get the comments for each post.
@@ -98,14 +102,18 @@ export const fetchPosts = (subreddit) => async (dispatch) => {
     }));
     dispatch(getPostsSuccess(postsWithMetadata));
   } catch (error) {
-    dispatch(getPostsFailed());
+    if (error.name !== "AbortError") dispatch(getPostsFailed());
   }
 };
 
+let searchPostsController;
 export const searchPosts = (searchTerm) => async (dispatch) => {
+  if (searchPostsController) searchPostsController.abort();
+  searchPostsController = new AbortController();
+  const { signal } = searchPostsController;
   try {
     dispatch(startGetPosts());
-    const posts = await getSubredditsbySearch(searchTerm);
+    const posts = await getSubredditsbySearch(searchTerm, { signal });
 
     const postsWithMetadata = posts.map((post) => ({
       ...post,
@@ -116,16 +124,19 @@ export const searchPosts = (searchTerm) => async (dispatch) => {
     }));
     dispatch(getPostsSuccess(postsWithMetadata));
   } catch (error) {
-    dispatch(getPostsFailed());
+    if (error.name !== "AbortError") dispatch(getPostsFailed());
   }
 };
 export const fetchComments = (index, permalink) => async (dispatch) => {
+  const controller = new AbortController();
   try {
     dispatch(startGetComments(index));
-    const comments = await getPostComments(permalink);
+    const comments = await getPostComments(permalink, {
+      signal: controller.signal,
+    });
     dispatch(getCommentsSuccess({ index, comments }));
   } catch (error) {
-    dispatch(getCommentsFailed(index));
+    if (error.name !== "AbortError") dispatch(getCommentsFailed(index));
   }
 };
 
@@ -143,7 +154,7 @@ export const postsToLoad = createSelector(
       return posts.filter(
         (post) =>
           (post.title && post.title.toLowerCase().includes(lowerSearch)) ||
-          (post.selftext && post.selftext.toLowerCase().includes(lowerSearch))
+          (post.selftext && post.selftext.toLowerCase().includes(lowerSearch)),
       );
     }
     return posts;

@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getSubreddits } from '../api/reddit';
+import { createSlice } from "@reduxjs/toolkit";
+import { getSubreddits } from "../api/reddit";
 
 const initialState = {
   subreddits: [],
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const subRedditSlice = createSlice({
-  name: 'subreddits',
+  name: "subreddits",
   initialState,
   reducers: {
     startGetSubreddits(state) {
@@ -26,22 +26,23 @@ const subRedditSlice = createSlice({
   },
 });
 
-export const {
-  getSubredditsFailed,
-  getSubredditsSuccess,
-  startGetSubreddits,
-} = subRedditSlice.actions;
+export const { getSubredditsFailed, getSubredditsSuccess, startGetSubreddits } =
+  subRedditSlice.actions;
 
 export default subRedditSlice.reducer;
 
 // This is a Redux Thunk that gets subreddits.
+let fetchSubredditsController;
 export const fetchSubreddits = () => async (dispatch) => {
+  if (fetchSubredditsController) fetchSubredditsController.abort();
+  fetchSubredditsController = new AbortController();
+  const { signal } = fetchSubredditsController;
   try {
     dispatch(startGetSubreddits());
-    const subreddits = await getSubreddits();
+    const subreddits = await getSubreddits({ signal });
     dispatch(getSubredditsSuccess(subreddits));
   } catch (error) {
-    dispatch(getSubredditsFailed());
+    if (error.name !== "AbortError") dispatch(getSubredditsFailed());
   }
 };
 
