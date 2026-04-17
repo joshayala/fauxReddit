@@ -10,7 +10,7 @@ import {
 } from 'react-icons/ti';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import shortenNumber from '../../utils/shortenRandomNumber';
+import shortenNumber from '../../utils/shortenNumber';
 import Card from '../../components/Card/Card';
 import Comment from '../Comment/Comment';
 import { GiSpikedHalo } from "react-icons/gi";

@@ -24,9 +24,14 @@ const Main = () => {
   }, [dispatch, selectedSubreddit]);
 
   useEffect(() => {
-    if (searchTerm) {
-      dispatch(searchPosts(searchTerm));
-    }
+    if (!searchTerm) return;
+
+    const controller = new AbortController();
+    dispatch(searchPosts(searchTerm, { signal: controller.signal }));
+
+    return () => {
+      controller.abort();
+    };
   }, [dispatch, searchTerm]);
 
 
