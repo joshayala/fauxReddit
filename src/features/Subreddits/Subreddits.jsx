@@ -14,7 +14,10 @@ import {
   const selectedSubreddit = useSelector(selectSelectedSubreddit);
 
   useEffect(() => {
-    dispatch(fetchSubreddits());
+    const promise = dispatch(fetchSubreddits());
+    return () => {
+      promise.abort();
+    };
   }, [dispatch]);
 
   return (

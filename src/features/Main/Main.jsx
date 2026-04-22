@@ -10,6 +10,7 @@ import {
   setSearchTerm,
   fetchComments,
   searchPosts,
+  toggleShowingComments,
 } from '../../store/redditslice'
 import './Main.css';
 
@@ -20,17 +21,19 @@ const Main = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPosts(selectedSubreddit));
+    const promise = dispatch(fetchPosts(selectedSubreddit));
+    return () => {
+      promise.abort();
+    };
   }, [dispatch, selectedSubreddit]);
 
   useEffect(() => {
     if (!searchTerm) return;
 
-    const controller = new AbortController();
-    dispatch(searchPosts(searchTerm, { signal: controller.signal }));
+    const promise = dispatch(searchPosts(searchTerm));
 
     return () => {
-      controller.abort();
+      promise.abort();
     };
   }, [dispatch, searchTerm]);
 
@@ -38,7 +41,8 @@ const Main = () => {
 
     const onToggleComments = (index) => {
       return (permalink) => {
-        dispatch(fetchComments(index, permalink));
+        dispatch(toggleShowingComments(index));
+        dispatch(fetchComments({ index, permalink }));
       };
     };
 
