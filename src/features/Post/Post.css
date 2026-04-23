@@ -35,8 +35,11 @@
   .post-image-container .post-image {
     width: auto;
     max-width: 100%;
+    max-height: 75vh; /* Prevents tall images from taking up too much vertical space */
+    object-fit: contain; /* Ensures the whole image is visible */
     display: block;
     height: auto;
+    margin: 0 auto; /* Centers the image */
   }
   
   .post-title {
